@@ -22,7 +22,7 @@ public class TilesetAdapterScript : MonoBehaviour
         if (_labyrinthGenerationScript == null)
             Debug.LogError("ITS NULL");
 
-        CheckForNeighbors();
+        //CheckForNeighbors();
 
     }
 
@@ -33,8 +33,10 @@ public class TilesetAdapterScript : MonoBehaviour
 
     }
 
-    void CheckForNeighbors()
+    public void CheckForNeighbors()
     {
+        _labyrinthGenerator = GameObject.Find("LabyrinthGenerator");
+        _labyrinthGenerationScript = _labyrinthGenerator.GetComponent<LabyrinthGenerationScript>();
         if (!_takenLocations.Equals(_labyrinthGenerationScript.GetTakenLocations()))
         {
             _takenLocations = _labyrinthGenerationScript.GetTakenLocations();

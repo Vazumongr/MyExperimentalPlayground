@@ -23,8 +23,14 @@ public class LabyrinthGenerationScript : MonoBehaviour
 
     public Canvas loadingScreen;
 
+    void Awake()
+    {
+        _labyrinthContainerTransform = _labyrinthContainer.GetComponent<Transform>();   //Gets the transform
+        StartCoroutine(GenerateMazeC());
+    }
+
     // Start is called before the first frame update
-    void Start()
+    void Begin()
     {
         _labyrinthContainerTransform = _labyrinthContainer.GetComponent<Transform>();   //Gets the transform
 
@@ -50,7 +56,7 @@ public class LabyrinthGenerationScript : MonoBehaviour
                 Debug.Log(experiment.GetComponent<Transform>().localScale);
                 Debug.Log(experiment.transform.localScale);
                 Debug.Log(experiment.GetComponent<Renderer>().bounds);*/
-        FindFurthestTile();
+        //FindFurthestTile();
     }
 
 
@@ -232,13 +238,18 @@ public class LabyrinthGenerationScript : MonoBehaviour
              * maze. But will increase the time that
              * nothing else can be performed (such as a loading screen animation).
              */
-            int modVal = 5000;
+            int modVal = 100;
 
             if (i % modVal == 0)
                 yield return null;
 
-            Debug.Log(i);   //simply logs the tile count
+            //Debug.Log(i);   //simply logs the tile count
         }
+        foreach(Transform child in _labyrinthContainerTransform)
+        {
+            child.GetComponent<TilesetAdapterScript>().CheckForNeighbors();
+        }
+        FindFurthestTile();
         loadingScreen.enabled = false;
     }
 
